@@ -1,5 +1,6 @@
 package zl.hadoop;
 
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
@@ -17,6 +18,9 @@ public class MaxTemperature {
 		Job job = new Job();
 		job.setJarByClass(MaxTemperature.class);
 		job.setJobName("Max Temperature");
+		
+		Configuration conf = job.getConfiguration();
+		conf.setLong(FileInputFormat.SPLIT_MAXSIZE, 1024*15);
 		
 		FileInputFormat.addInputPath(job, new Path(args[0]));
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
